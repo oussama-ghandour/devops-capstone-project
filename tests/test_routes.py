@@ -146,5 +146,46 @@ class TestAccountService(TestCase):
         # assert that the resp.status_code is status.HTTP_404_NOT_FOUND
         self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
 
+    # TEST CASE FOR ACCOUNT LIST
+    def test_get_account_list(self):
+        """It should get a list of Accounts"""
+        self._create_accounts(7)
+        # send a self.client.get() request to the BASE_URL
+        resp = self.client.get(BASE_URL)
+        # assert that the resp.status_code is status.HTTP_200_OK
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        # get the data from resp.get_json()
+        data = resp.get_json()
+        # assert that the len() of the data is 5 (number of accounts created)
+        self.assertEqual(len(data), 7)        
 
+    # TEST CASE FOR UPDATE ACCOUNT
+    def test_update_account(self):
+        """It should update an existing account"""
+        # create an account to update
+        test_account = AccountFactory()
+        # send a self.client.post() request to the BASE_URL with json payload
+        resp = self.client.post(BASE_URL, json=test_account.serialize())
+        # assert resp with status.HTTP_201_CREATED
+        self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
+        # update the account
+        new_account = resp.get_json()
+        # change the new account name
+        new_account["name"] = "Just for Test"
+        # send a request to the BASE_URL with json payload
+        resp = self.client.put(f"{BASE_URL}/{new_account['id']}", json=new_account)
+        # assert the resp is status HTTP_200_OK
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        # get the data as updated_account
+        updated_account = resp.get_json()
+        # assert the updated_account
+        self.assertEqual(updated_account["name"], "Just for Test")
 
+    # TEST CASE FOR DELETE ACCOUNT
+    def test_delete_account(self):
+        """It should delete an account"""
+        account = self._create_accounts(1)[0]
+        # send a request tot the BASE_URL with an id of an account
+        resp = self.client.delete(f"{BASE_URL}/{account.id}")
+        # assert that resp is status.HTTP_204_NO_CONTENT
+        self.assertEqual(resp.status_code, status.HTTP_204_NO_CONTENT)

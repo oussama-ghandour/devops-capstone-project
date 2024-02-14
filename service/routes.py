@@ -61,7 +61,20 @@ def create_accounts():
 # LIST ALL ACCOUNTS
 ######################################################################
 
-# ... place you code here to LIST accounts ...
+@app.route("/accounts", methods=["GET"])
+def list_accounts():
+    """
+    This endpoint will list all accounts
+    """
+    app.logger.info("Request to list all accounts")
+    # Account.all() method to retrieve all accounts
+    accounts = Account.all()
+    # create a list of serialize() accounts
+    account_list = [account.serialize() for account in accounts]
+    # log the number of accounts in the list
+    app.logger.info("Returning [%s] accounts, len(account_list)")
+    # return the lists with status.HTTP_200_Ok
+    return jsonify(account_list), status.HTTP_200_OK
 
 
 ######################################################################
@@ -88,14 +101,39 @@ def get_accounts(account_id):
 # UPDATE AN EXISTING ACCOUNT
 ######################################################################
 
-# ... place you code here to UPDATE an account ...
+@app.route("/accounts/<int:account_id>", methods=["PUT"])
+def update_accounts(account_id):
+    """
+    This endpoint will update an Account
+    """
+    app.logger.info("Request to update an Account with id: %s", account_id)
+    # find method to get account by id
+    account = Account.find(account_id)
+    # return 404 not found if the account not found
+    if not account:
+        abort(status.HTTP_404_NOT_FOUND,f"Account with id [{account_id}] could not be found")
+    account.deserialize(request.get_json())
+    # update the account with the new data
+    account.update()
+    # return python dictionary with a return code of HTTP_200_OK
+    return account.serialize(), status.HTTP_200_OK
+
 
 
 ######################################################################
 # DELETE AN ACCOUNT
 ######################################################################
 
-# ... place you code here to DELETE an account ...
+@app.route("/accounts/<int:account_id>", methods=["DELETE"])
+def delete_accounts(account_id):
+    """This endpoint will delete an existing account"""
+    app.logger.info("Request to delete an account with id: %s", account_id)
+    # find() method to get account with id
+    account = Account.find(account_id)
+    # if found, call the delete() method
+    if account:
+        account.delete()
+    return "", status.HTTP_204_NO_CONTENT
 
 
 ######################################################################
