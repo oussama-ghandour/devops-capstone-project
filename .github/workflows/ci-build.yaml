@@ -30,7 +30,7 @@ jobs:
     steps:
       # step to checkout the code
       - name: Checkout
-        uses: actions/checkout@2
+        uses: actions/checkout@v2
       # step to install dependencies
       - name: Install dependencies
         run: |
