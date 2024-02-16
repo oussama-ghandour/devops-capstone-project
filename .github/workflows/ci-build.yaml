@@ -25,12 +25,12 @@ jobs:
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
-          --health-retiries 5
+          --health-retries 5
     # Steps section
     steps:
       # step to checkout the code
       - name: Checkout
-        uses: actions/checkout@2
+        uses: actions/checkout@v2
       # step to install dependencies
       - name: Install dependencies
         run: |
@@ -46,4 +46,4 @@ jobs:
         run: nosetests
         # add an environment variable
         env:
-          DATABASE_URI: "postgresql://postgres:{password}@{service}:{port}/{database}"
+          DATABASE_URI: "postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/testdb"
