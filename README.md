@@ -122,6 +122,9 @@ Please only use these commands for working stand-alone on your own computer with
 
 You can now perform Tekton development locally, just like in the Cloud IDE lab environment.
 
+## Added badge for Github Actions
+![Build Status](https://github.com/oussama-ghandour/devops-capstone-project/actions/workflows/ci-build.yaml/badge.svg)
+
 ## Author
 
 [John Rofrano](https://www.coursera.org/instructor/johnrofrano), Senior Technical Staff Member, DevOps Champion, @ IBM Research, and Instructor @ Coursera

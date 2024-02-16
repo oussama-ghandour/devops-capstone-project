@@ -1,7 +1,7 @@
 ---
 name: Story-CI_checks
 about: implementing continuous integration
-title: ''
+title: 'Need the ability to automate continuous integration checks'
 labels: technical debt
 assignees: ''
 
