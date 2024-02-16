@@ -1,6 +1,6 @@
 ---
 name: Story - template
-about: planning stroy template
+about: planning story template
 title: ''
 labels: ''
 assignees: oussama-ghandour
