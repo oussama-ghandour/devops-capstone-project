@@ -44,5 +44,6 @@ jobs:
       # step to add unit testing
       - name: Run unit tests with nose
         run: nosetests
+        # add an environment variable
         env:
           DATABASE_URI: "postgresql://postgres:{password}@{service}:{port}/{database}"
