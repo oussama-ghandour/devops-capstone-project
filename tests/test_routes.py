@@ -137,7 +137,7 @@ class TestAccountService(TestCase):
         data = resp.get_json()
         # assert that data["name"] equals the account.name
         self.assertEqual(data["name"], account.name)
-    
+
     # TEST CASE FOR ACCOUNT NOT FOUND
     def test_get_account_not_found(self):
         """It should not Read an Account that is not found"""
@@ -157,7 +157,7 @@ class TestAccountService(TestCase):
         # get the data from resp.get_json()
         data = resp.get_json()
         # assert that the len() of the data is 5 (number of accounts created)
-        self.assertEqual(len(data), 7)        
+        self.assertEqual(len(data), 7)
 
     # TEST CASE FOR UPDATE ACCOUNT
     def test_update_account(self):
