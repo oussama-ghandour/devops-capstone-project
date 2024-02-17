@@ -38,6 +38,7 @@ class TestAccountService(TestCase):
         app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
         app.logger.setLevel(logging.CRITICAL)
         init_db(app)
+        # disable https
         talisman.force_https = False
         
     @classmethod
@@ -206,6 +207,7 @@ class TestAccountService(TestCase):
     ######################################################################
     #  SECURITY HEADERS
     ######################################################################
+    # add security headers
     def test_security_headers(self):
         """It should return security headers"""
         # passing environ_overrides as a parameter
@@ -223,3 +225,14 @@ class TestAccountService(TestCase):
         # headers items
         for key, value in headers.items():
             self.assertEqual(response.headers.get(key), value)
+
+    # add CORS policies
+    def test_cors_security(self):
+        """It should return a CORS header"""
+        # passing environ_overrides as a parameter
+        response = self.client.get('/', environ_overrides=HTTPS_ENVIRON)
+        # assert with HTTP_200_OK
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        # check for the CORS headers
+        self.assertEqual(response.headers.get('Access-Control-Allow-Origin'), '*')
+
