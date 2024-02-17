@@ -1,9 +1,9 @@
 ---
 name: Story-CI_checks
 about: implementing continuous integration
-title: 'Need the ability to automate continuous integration checks'
+title: Need the ability to automate continuous integration checks
 labels: technical debt
-assignees: ''
+assignees: oussama-ghandour
 
 ---
 
