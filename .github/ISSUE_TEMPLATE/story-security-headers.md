@@ -3,7 +3,7 @@ name: Story-Security-Headers
 about: story about security enhancements
 title: Need to Add Security Headers and CORS Policies
 labels: technical debt
-assignees: ''
+assignees: oussama-ghandour
 
 ---
 

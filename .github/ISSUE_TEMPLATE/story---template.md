@@ -2,7 +2,7 @@
 name: Story - template
 about: planning story template
 title: ''
-labels: ''
+labels: technical debt
 assignees: oussama-ghandour
 
 ---
