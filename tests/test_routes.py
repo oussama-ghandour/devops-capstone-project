@@ -12,12 +12,16 @@ from tests.factories import AccountFactory
 from service.common import status  # HTTP Status Codes
 from service.models import db, Account, init_db
 from service.routes import app
+from service import talisman # import talisman from service
 
 DATABASE_URI = os.getenv(
     "DATABASE_URI", "postgresql://postgres:postgres@localhost:5432/postgres"
 )
 
 BASE_URL = "/accounts"
+
+# Add https protocol
+HTTPS_ENVIRON = {'wsgi.url_scheme': 'https'}
 
 
 ######################################################################
@@ -34,7 +38,8 @@ class TestAccountService(TestCase):
         app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
         app.logger.setLevel(logging.CRITICAL)
         init_db(app)
-
+        talisman.force_https = False
+        
     @classmethod
     def tearDownClass(cls):
         """Runs once before test suite"""
@@ -196,3 +201,25 @@ class TestAccountService(TestCase):
         resp = self.client.delete(BASE_URL)
         # assert that resp is status.HTTP_405_METHOD_NOT_ALLOWED
         self.assertEqual(resp.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    
+    ######################################################################
+    #  SECURITY HEADERS
+    ######################################################################
+    def test_security_headers(self):
+        """It should return security headers"""
+        # passing environ_overrides as a parameter
+        response = self.client.get('/', environ_overrides=HTTPS_ENVIRON)
+        # assert with HTTP_200_OK
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        # headers content
+        headers = {
+        'X-Frame-Options': 'SAMEORIGIN',
+        'X-Content-Type-Options': 'nosniff',
+        # Adjusting the expectation for the Content-Security-Policy header
+        'Content-Security-Policy': 'default-src \'self\'; object-src \'none\'',
+        'Referrer-Policy': 'strict-origin-when-cross-origin'
+        }
+        # headers items
+        for key, value in headers.items():
+            self.assertEqual(response.headers.get(key), value)
