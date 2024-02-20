@@ -1,7 +1,7 @@
 ---
 name: Story-docker-image
 about: Deploy Docker image to Kubernetes
-title: ''
+title: 'Deploy Docker image'
 labels: enhancement
 assignees: oussama-ghandour
 
