@@ -1,7 +1,7 @@
 ---
 name: Story-automate-deployment
 about: Create a CD pipeline to automate deployment to Kubernetes
-title: ''
+title: 'Create a CD pipeline'
 labels: enhancement
 assignees: oussama-ghandour
 

@@ -1,7 +1,7 @@
 ---
 name: story-cd-pipeline
 about: Create a CD pipeline to automate deployment to Kubernetes
-title: ''
+title: 'Containerize microservice'
 labels: technical debt
 assignees: oussama-ghandour
 
