@@ -11,13 +11,14 @@ spec:
     - name: branch
       default: main
   tasks:
+    # init task
     - name: init
       workspaces:
         - name: source
           workspace: pipeline-workspace          
       taskRef:
         name: cleanup
-
+    # clone task
     - name: clone
       workspaces:
         - name: output
@@ -31,7 +32,7 @@ spec:
         value: $(params.branch)
       runAfter:
         - init
-
+    # lint task
     - name: lint
       workspaces:
         - name: source
