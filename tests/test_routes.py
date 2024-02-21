@@ -210,32 +210,31 @@ class TestAccountService(TestCase):
 #  SECURITY HEADERS
 ######################################################################
 
-def test_security_headers(self):
-    """It should return security headers"""
-    # passing environ_overrides as a parameter
-    response = self.client.get('/', environ_overrides=HTTPS_ENVIRON)
-    # assert with HTTP_200_OK
-    self.assertEqual(response.status_code, status.HTTP_200_OK)
-    # headers content
-    headers = {
-        'X-Frame-Options': 'SAMEORIGIN',
-        'X-Content-Type-Options': 'nosniff',
-        # Adjusting the expectation for the Content-Security-Policy header
-        'Content-Security-Policy':
-        'default-src \'self\'; object-src \'none\'',
-        'Referrer-Policy': 'strict-origin-when-cross-origin'
-    }
-    # headers items
-    for key, value in headers.items():
-        self.assertEqual(response.headers.get(key), value)
-
-    # add CORS policies
-    def test_cors_security(self):
-        """It should return a CORS header"""
+    def test_security_headers(self):
+        """It should return security headers"""
         # passing environ_overrides as a parameter
         response = self.client.get('/', environ_overrides=HTTPS_ENVIRON)
         # assert with HTTP_200_OK
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # check for the CORS headers
-        self.assertEqual(response.headers.get('Access-Control-Allow-Origin'),
-                         '*')
+        # headers content
+        headers = {
+            'X-Frame-Options': 'SAMEORIGIN',
+            'X-Content-Type-Options': 'nosniff',
+            # Adjusting the expectation for the Content-Security-Policy header
+            'Content-Security-Policy':
+            'default-src \'self\'; object-src \'none\'',
+            'Referrer-Policy': 'strict-origin-when-cross-origin'
+        }
+        # headers items
+        for key, value in headers.items():
+            self.assertEqual(response.headers.get(key), value)
+
+        # add CORS policies
+        def test_cors_security(self):
+            """It should return a CORS header"""
+            # passing environ_overrides as a parameter
+            response = self.client.get('/', environ_overrides=HTTPS_ENVIRON)
+            # assert with HTTP_200_OK
+            self.assertEqual(response.status_code, status.HTTP_200_OK)
+            # check for the CORS headers
+            self.assertEqual(response.headers.get('Access-Control-Allow-Origin'),'*')
