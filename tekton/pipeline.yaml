@@ -17,7 +17,7 @@ spec:
           workspace: pipeline-workspace          
       taskRef:
         name: cleanup
-
+    
     - name: clone
       workspaces:
         - name: output
@@ -31,7 +31,7 @@ spec:
         value: $(params.branch)
       runAfter:
         - init
-
+    # lint task
     - name: lint
       workspaces:
         - name: source
