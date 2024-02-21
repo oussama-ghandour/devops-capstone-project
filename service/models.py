@@ -91,7 +91,8 @@ class Account(db.Model, PersistentBase):
     name = db.Column(db.String(64))
     email = db.Column(db.String(64))
     address = db.Column(db.String(256))
-    phone_number = db.Column(db.String(32), nullable=True)  # phone number is optional
+    phone_number = db.Column(db.String(32),
+                             nullable=True)  # phone number is optional
     date_joined = db.Column(db.Date(), nullable=False, default=date.today())
 
     def __repr__(self):

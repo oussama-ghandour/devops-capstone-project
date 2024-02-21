@@ -12,7 +12,7 @@ from tests.factories import AccountFactory
 from service.common import status  # HTTP Status Codes
 from service.models import db, Account, init_db
 from service.routes import app
-from service import talisman # import talisman from service
+from service import talisman  # import talisman from service
 
 DATABASE_URI = os.getenv(
     "DATABASE_URI", "postgresql://postgres:postgres@localhost:5432/postgres"
@@ -40,7 +40,7 @@ class TestAccountService(TestCase):
         init_db(app)
         # disable https
         talisman.force_https = False
-        
+
     @classmethod
     def tearDownClass(cls):
         """Runs once before test suite"""
@@ -127,7 +127,8 @@ class TestAccountService(TestCase):
             json=account.serialize(),
             content_type="test/html"
         )
-        self.assertEqual(response.status_code, status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
+        self.assertEqual(response.status_code,
+                         status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
 
     # TEST CASE FOR GET ACCOUNT
     def test_get_account(self):
@@ -147,7 +148,7 @@ class TestAccountService(TestCase):
     # TEST CASE FOR ACCOUNT NOT FOUND
     def test_get_account_not_found(self):
         """It should not Read an Account that is not found"""
-        # send a self.client.get() request to the BASE_URL with an invalid account number (0: account id)
+        # send a request to the BASE_URL with invalid account number
         resp = self.client.get(f"{BASE_URL}/0")
         # assert that the resp.status_code is status.HTTP_404_NOT_FOUND
         self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
@@ -179,7 +180,8 @@ class TestAccountService(TestCase):
         # change the new account name
         new_account["name"] = "Just for Test"
         # send a request to the BASE_URL with json payload
-        resp = self.client.put(f"{BASE_URL}/{new_account['id']}", json=new_account)
+        resp = self.client.put(f"{BASE_URL}/{new_account['id']}",
+                               json=new_account)
         # assert the resp is status HTTP_200_OK
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         # get the data as updated_account
@@ -203,28 +205,29 @@ class TestAccountService(TestCase):
         # assert that resp is status.HTTP_405_METHOD_NOT_ALLOWED
         self.assertEqual(resp.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
-    
-    ######################################################################
-    #  SECURITY HEADERS
-    ######################################################################
-    # add security headers
-    def test_security_headers(self):
-        """It should return security headers"""
-        # passing environ_overrides as a parameter
-        response = self.client.get('/', environ_overrides=HTTPS_ENVIRON)
-        # assert with HTTP_200_OK
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # headers content
-        headers = {
+
+######################################################################
+#  SECURITY HEADERS
+######################################################################
+
+def test_security_headers(self):
+    """It should return security headers"""
+    # passing environ_overrides as a parameter
+    response = self.client.get('/', environ_overrides=HTTPS_ENVIRON)
+    # assert with HTTP_200_OK
+    self.assertEqual(response.status_code, status.HTTP_200_OK)
+    # headers content
+    headers = {
         'X-Frame-Options': 'SAMEORIGIN',
         'X-Content-Type-Options': 'nosniff',
         # Adjusting the expectation for the Content-Security-Policy header
-        'Content-Security-Policy': 'default-src \'self\'; object-src \'none\'',
+        'Content-Security-Policy':
+        'default-src \'self\'; object-src \'none\'',
         'Referrer-Policy': 'strict-origin-when-cross-origin'
-        }
-        # headers items
-        for key, value in headers.items():
-            self.assertEqual(response.headers.get(key), value)
+    }
+    # headers items
+    for key, value in headers.items():
+        self.assertEqual(response.headers.get(key), value)
 
     # add CORS policies
     def test_cors_security(self):
@@ -234,4 +237,5 @@ class TestAccountService(TestCase):
         # assert with HTTP_200_OK
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         # check for the CORS headers
-        self.assertEqual(response.headers.get('Access-Control-Allow-Origin'), '*')
+        self.assertEqual(response.headers.get('Access-Control-Allow-Origin'),
+                         '*')
