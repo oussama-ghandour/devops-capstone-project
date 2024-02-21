@@ -11,6 +11,7 @@ spec:
     - name: branch
       default: main
   tasks:
+    # init task
     - name: init
       workspaces:
         - name: source
