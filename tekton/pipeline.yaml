@@ -46,7 +46,7 @@ spec:
         value: ["--count","--max-complexity=10","--max-line-length=127","--statistics"]         
       runAfter:
         - clone 
-    # tests task
+    # test task
     - name: tests
       workspaces:
         - name: source
