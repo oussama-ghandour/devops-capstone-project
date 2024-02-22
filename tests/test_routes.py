@@ -205,7 +205,6 @@ class TestAccountService(TestCase):
         # assert that resp is status.HTTP_405_METHOD_NOT_ALLOWED
         self.assertEqual(resp.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
-
 ######################################################################
 #  SECURITY HEADERS
 ######################################################################
@@ -237,4 +236,7 @@ class TestAccountService(TestCase):
             # assert with HTTP_200_OK
             self.assertEqual(response.status_code, status.HTTP_200_OK)
             # check for the CORS headers
-            self.assertEqual(response.headers.get('Access-Control-Allow-Origin'),'*')
+            self.assertEqual(
+                response.headers.get('Access-Control-Allow-Origin'),
+                '*'
+            )

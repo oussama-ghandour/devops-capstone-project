@@ -42,7 +42,8 @@ def index():
 def create_accounts():
     """
     Creates an Account
-    This endpoint will create an Account based the data in the body that is posted
+    This endpoint will create an Account
+    based the data in the body that is posted
     """
     app.logger.info("Request to create an Account")
     check_content_type("application/json")
@@ -51,7 +52,8 @@ def create_accounts():
     account.create()
     message = account.serialize()
     # Uncomment once get_accounts has been implemented
-    # location_url = url_for("get_accounts", account_id=account.id, _external=True)
+    # location_url = url_for
+    # ("get_accounts", account_id=account.id, _external=True)
     location_url = "/"  # Remove once get_accounts has been implemented
     return make_response(
         jsonify(message), status.HTTP_201_CREATED, {"Location": location_url}
@@ -91,8 +93,9 @@ def get_accounts(account_id):
     account = Account.find(account_id)
     # Abort() with a status.HTTP_404_NOT_FOUND if it cannot be found
     if not account:
-        abort(status.HTTP_404_NOT_FOUND, f"Account with id [{account}] could not be found.")
-    # return the serialize() version of the account with a return code of status.HTTP_200_OK
+        abort(status.HTTP_404_NOT_FOUND,
+              f"Account with id [{account}] could not be found.")
+    # return the serialize() version of the account
     return account.serialize(), status.HTTP_200_OK
 
 
@@ -110,7 +113,8 @@ def update_accounts(account_id):
     account = Account.find(account_id)
     # return 404 not found if the account not found
     if not account:
-        abort(status.HTTP_404_NOT_FOUND, f"Account with id [{account_id}] could not be found")
+        abort(status.HTTP_404_NOT_FOUND,
+              f"Account with id [{account_id}] could not be found")
     account.deserialize(request.get_json())
     # update the account with the new data
     account.update()
