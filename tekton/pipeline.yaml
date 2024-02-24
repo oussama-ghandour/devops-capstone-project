@@ -47,6 +47,7 @@ spec:
         value: ["--count","--max-complexity=10","--max-line-length=127","--statistics"]         
       runAfter:
         - clone 
+
     # Test task
     - name: tests
       workspaces:
@@ -94,3 +95,4 @@ spec:
           oc get pods -l app=accounts
       runAfter:
         - build
+
