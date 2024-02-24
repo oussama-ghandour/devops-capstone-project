@@ -205,7 +205,6 @@ class TestAccountService(TestCase):
         # assert that resp is status.HTTP_405_METHOD_NOT_ALLOWED
         self.assertEqual(resp.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
-
     ######################################################################
     #  SECURITY HEADERS
     ######################################################################
