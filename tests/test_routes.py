@@ -211,7 +211,7 @@ class TestAccountService(TestCase):
     def test_security_headers(self):
         """It should return security headers"""
         response = self.client.get('/', environ_overrides=HTTPS_ENVIRON)
-        # assert with HTTP_200_OK
+        # assert with  status_code HTTP_200_OK
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         # headers content
         headers = {
