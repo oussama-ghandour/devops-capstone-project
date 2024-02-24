@@ -21,24 +21,19 @@ spec:
       - image: us.icr.io/sn-labs-oussam92ing/accounts:1
         name: accounts
         resources: {}
-        # add the required environment variables to the manifest
         env:
-          # database host
           - name: DATABASE_HOST
             value: postgresql
-          # database name
           - name: DATABASE_NAME
             valueFrom:
               secretKeyRef:
                 name: postgresql
                 key: database-name
-          # database password
           - name: DATABASE_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: postgresql
                 key: database-password
-          # database user
           - name: DATABASE_USER
             valueFrom:
               secretKeyRef:
