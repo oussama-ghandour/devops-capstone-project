@@ -205,13 +205,12 @@ class TestAccountService(TestCase):
         # assert that resp is status.HTTP_405_METHOD_NOT_ALLOWED
         self.assertEqual(resp.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
-######################################################################
-#  SECURITY HEADERS
-######################################################################
 
+    ######################################################################
+    #  SECURITY HEADERS
+    ######################################################################
     def test_security_headers(self):
         """It should return security headers"""
-        # passing environ_overrides as a parameter
         response = self.client.get('/', environ_overrides=HTTPS_ENVIRON)
         # assert with HTTP_200_OK
         self.assertEqual(response.status_code, status.HTTP_200_OK)

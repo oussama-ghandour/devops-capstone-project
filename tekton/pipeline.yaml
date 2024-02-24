@@ -47,7 +47,8 @@ spec:
         value: ["--count","--max-complexity=10","--max-line-length=127","--statistics"]         
       runAfter:
         - clone 
-    # test task
+
+    # Test task
     - name: tests
       workspaces:
         - name: source
@@ -61,7 +62,7 @@ spec:
         value: "-v --with-spec --spec-color"
       runAfter:
        - clone
-    # build task
+    # Build task
     - name: build
       workspaces:
         - name: source
@@ -70,12 +71,12 @@ spec:
         name: buildah
         kind: ClusterTask
       params:
-      - name: IMAGE 
+      - name: IMAGE
         value: "$(params.build-image)"
       runAfter:
         - tests
         - lint
-    # deploy task
+    # Deploy task
     - name: deploy
       workspaces:
         - name: manifest-dir
@@ -94,4 +95,4 @@ spec:
           oc get pods -l app=accounts
       runAfter:
         - build
-       
+
